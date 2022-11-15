@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/SEARCH-CEP-REACT/static/css/main.565066ea.css",
+    "main.js": "/SEARCH-CEP-REACT/static/js/main.48dbca16.js",
+    "index.html": "/SEARCH-CEP-REACT/index.html",
+    "main.565066ea.css.map": "/SEARCH-CEP-REACT/static/css/main.565066ea.css.map",
+    "main.48dbca16.js.map": "/SEARCH-CEP-REACT/static/js/main.48dbca16.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.565066ea.css",
+    "static/js/main.48dbca16.js"
+  ]
+}
