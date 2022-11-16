@@ -1,3 +1,4 @@
+import { Box, CircularProgress } from "@mui/material"
 import { useEffect, useState } from "react"
 import "./App.css"
 import BasicModal from "./components/basicModal"
@@ -13,6 +14,7 @@ function App() {
   const [open, setOpen] = useState(false)
   const [edit, setEdit] = useState({})
   const [valueInput, setValueInput] = useState("")
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     data ? localStorage.setItem("cep", JSON.stringify(data)) : []
@@ -27,8 +29,15 @@ function App() {
   }
 
   async function onSearch() {
-    const res = await feacher(valueInput)
-    setData(prev => [...prev, res] || [])
+    try {
+      setLoading(true)
+      const res = await feacher(valueInput)
+      setData(prev => [res, ...prev])
+    } catch (e) {
+      console.log("nao foi possivel encontrar o cep")
+    } finally {
+      setLoading(false)
+    }
   }
 
   function onChange(e) {
@@ -84,6 +93,14 @@ function App() {
           handleConfirmed={onConfirmedEdit}
           handleChangeEdit={onChangeEdit}
         />
+      )}
+
+      {loading && (
+        <div className="absolute bottom-0 top-0 left-0 right-0">
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+        </div>
       )}
     </div>
   )

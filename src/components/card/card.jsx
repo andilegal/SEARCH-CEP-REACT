@@ -1,8 +1,8 @@
 function Card({ data, handleDelete, handleEdit }) {
-  const { bairro, localidade, cep, uf } = data
+  const { bairro, localidade, cep, uf, logradouro } = data
   return (
-    <div className="overflow-hidden bg-white shadow sm:rounded-lg mb-10">
-      <div className="px-4 py-5 sm:px-6 flex justify-between">
+    <div className="overflow-hidden bg-white shadow sm:rounded-lg mb-10 even:bg-slate-500">
+      <div className="px-4 py-5 sm:px-6 flex justify-between even:bg-slate-500">
         <h3 className="text-lg font-medium leading-6 text-gray-900">CEP CADASTRADOS</h3>
         <div className="flex items-center justify-between">
           <button
@@ -33,6 +33,10 @@ function Card({ data, handleDelete, handleEdit }) {
           <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-500">BAIRRO</dt>
             <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{bairro}</dd>
+          </div>
+          <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt className="text-sm font-medium text-gray-500">LOGRADOURO</dt>
+            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{logradouro}</dd>
           </div>
           <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-500">LOCALIDADE</dt>

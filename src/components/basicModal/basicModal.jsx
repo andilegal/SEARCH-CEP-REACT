@@ -21,7 +21,7 @@ export default function BasicModal({
   handleConfirmed,
   handleChangeEdit,
 }) {
-  const { bairro, localidade, cep, uf } = dataEdit
+  const { bairro, localidade, cep, uf, logradouro } = dataEdit
 
   return (
     <div>
@@ -36,6 +36,7 @@ export default function BasicModal({
             <TextField
               id="filled-basic"
               label="CEP"
+              disabled
               variant="filled"
               className="w-full"
               defaultValue={cep}
@@ -52,6 +53,17 @@ export default function BasicModal({
               defaultValue={bairro}
               onChange={handleChangeEdit}
               name={"bairro"}
+            />
+          </div>
+          <div className="mb-5 w-full">
+            <TextField
+              id="filled-basic"
+              label="LOGRADOURO"
+              variant="filled"
+              className="w-full"
+              defaultValue={logradouro}
+              onChange={handleChangeEdit}
+              name={"logradouro"}
             />
           </div>
           <div className="mb-5 w-full">
