@@ -1,23 +1,28 @@
-import { Box, CircularProgress } from "@mui/material"
 import { useEffect, useState } from "react"
 import "./App.css"
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore"
 import BasicModal from "./components/basicModal"
 import Button from "./components/button"
 import Card from "./components/card"
 import Form from "./components/form"
 import InputText from "./components/inputText"
 import { feacher } from "./services/service"
+import { db } from "./firebase/configs"
 
 function App() {
-  const initialValue = JSON.parse(localStorage.getItem("cep")) || []
-  const [data, setData] = useState(initialValue)
+  const cepCollectionRef = collection(db, "cep")
+  const [data, setData] = useState([])
   const [open, setOpen] = useState(false)
   const [edit, setEdit] = useState({})
   const [valueInput, setValueInput] = useState("")
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    data ? localStorage.setItem("cep", JSON.stringify(data)) : []
+    async function getCEPs() {
+      const results = await getDocs(cepCollectionRef)
+      setData(results.docs.map(doc => ({ ...doc.data(), id: doc.id })))
+    }
+    getCEPs()
   }, [data])
 
   function onModalOpen() {
@@ -30,9 +35,10 @@ function App() {
 
   async function onSearch() {
     try {
+      const cepObj = await feacher(valueInput)
+      setData(prev => [cepObj, ...prev])
+      await addDoc(cepCollectionRef, cepObj)
       setLoading(true)
-      const res = await feacher(valueInput)
-      setData(prev => [res, ...prev])
     } catch (e) {
       console.log("nao foi possivel encontrar o cep")
     } finally {
@@ -44,14 +50,14 @@ function App() {
     setValueInput(e.target.value.replace(/\D/g, "").trim())
   }
 
-  function onDelete(e) {
-    const removedItem = data.filter(item => item.cep !== e.target.name)
-    setData(removedItem)
+  async function onDelete(e) {
+    const cepDoc = doc(db, "cep", e.target.id)
+    await deleteDoc(cepDoc)
   }
 
   function onEdit({ target }) {
     onModalOpen()
-    const filteredCEP = data.find(item => item.cep === target.name)
+    const filteredCEP = data.find(item => item.id === target.id)
     setEdit(filteredCEP)
   }
 
@@ -60,15 +66,9 @@ function App() {
     setEdit(prev => ({ ...prev, ...newData }))
   }
 
-  function onConfirmedEdit() {
-    const newState = data.map(obj => {
-      if (obj.cep === edit.cep) {
-        return { ...obj, ...edit }
-      }
-      return obj
-    })
-
-    setData(newState)
+  async function onConfirmedEdit(e) {
+    const cepDoc = doc(db, "cep", e.target.id)
+    await updateDoc(cepDoc, edit)
     onModalClose()
   }
 

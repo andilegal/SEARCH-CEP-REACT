@@ -1,5 +1,5 @@
 function Card({ data, handleDelete, handleEdit }) {
-  const { bairro, localidade, cep, uf, logradouro } = data
+  const { bairro, localidade, cep, uf, logradouro, id } = data
   return (
     <div className="overflow-hidden bg-white shadow sm:rounded-lg mb-10 even:bg-slate-500">
       <div className="px-4 py-5 sm:px-6 flex justify-between even:bg-slate-500">
@@ -10,6 +10,7 @@ function Card({ data, handleDelete, handleEdit }) {
             type="button"
             onClick={handleEdit}
             name={cep}
+            id={id}
           >
             EDITAR
           </button>
@@ -19,6 +20,7 @@ function Card({ data, handleDelete, handleEdit }) {
             type="button"
             onClick={handleDelete}
             name={cep}
+            id={id}
           >
             DELETAR
           </button>

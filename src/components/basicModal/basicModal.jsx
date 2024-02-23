@@ -21,7 +21,7 @@ export default function BasicModal({
   handleConfirmed,
   handleChangeEdit,
 }) {
-  const { bairro, localidade, cep, uf, logradouro } = dataEdit
+  const { bairro, localidade, cep, uf, logradouro, id } = dataEdit
 
   return (
     <div>
@@ -86,7 +86,7 @@ export default function BasicModal({
             name={"uf"}
           />
           <div className="mt-10 text-end">
-            <Button variant="contained" onClick={handleConfirmed}>
+            <Button variant="contained" onClick={handleConfirmed} id={id}>
               CONFIRMAR
             </Button>
           </div>
